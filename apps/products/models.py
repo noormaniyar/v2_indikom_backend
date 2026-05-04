@@ -159,6 +159,8 @@ class Product(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
     review_count = models.IntegerField(default=0)
     is_featured = models.BooleanField(default=False)
+    is_top_deal = models.BooleanField(default=False)
+    is_daily_use_item = models.BooleanField(default=False)
     tags = models.CharField(max_length=500, blank=True, help_text='Comma-separated tags')
     moderation_status = models.CharField(
         max_length=20, choices=ModerationStatus.choices, default=ModerationStatus.PENDING

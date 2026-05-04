@@ -87,6 +87,7 @@ class RequestOTPView(APIView):
 
         return Response({
             "message": "OTP sent successfully",
+            "otp": otp.code,
             "is_new_user": created,
             "expires_at": otp.expires_at
         })
@@ -215,6 +216,11 @@ class ResetPasswordView(APIView):
 
 
 # ─── ADDRESS VIEWS ────────────────────────────────────────────────────────────
+class AddressListView(generics.ListAPIView):
+    serializer_class = AddressSerializer
+
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)
 
 class AddressListCreateView(generics.ListCreateAPIView):
     serializer_class = AddressSerializer

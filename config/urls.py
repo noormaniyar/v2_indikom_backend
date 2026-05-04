@@ -14,6 +14,7 @@ urlpatterns = [
 
     # App Routes
     path('api/v1/auth/', include('apps.accounts.urls')),
+    path('api/v1/banners/', include('apps.banners.urls')),
     path('api/v1/products/', include('apps.products.urls')),
     path('api/v1/orders/', include('apps.orders.urls')),
     path('api/v1/delivery/', include('apps.delivery.urls')),
