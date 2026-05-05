@@ -160,6 +160,7 @@ class Product(models.Model):
     review_count = models.IntegerField(default=0)
     is_featured = models.BooleanField(default=False)
     is_top_deal = models.BooleanField(default=False)
+    is_best_selling = models.BooleanField(default=False)
     is_daily_use_item = models.BooleanField(default=False)
     tags = models.CharField(max_length=500, blank=True, help_text='Comma-separated tags')
     moderation_status = models.CharField(
