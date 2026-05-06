@@ -97,3 +97,8 @@ class ProductReviewAdmin(admin.ModelAdmin):
 class CartAdmin(admin.ModelAdmin):
     list_display = ['user', 'item_count', 'total', 'updated_at']
     search_fields = ['user__email']
+
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ['product', 'quantity', 'added_at']

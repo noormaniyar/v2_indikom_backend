@@ -338,7 +338,7 @@ class Cart(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Cart of {self.user.email}"
+        return f"Cart of {self.user.phone}"
 
     @property
     def total(self):

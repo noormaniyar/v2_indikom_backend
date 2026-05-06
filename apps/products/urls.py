@@ -39,7 +39,7 @@ urlpatterns = [
     path('wishlist/toggle/<int:product_id>/', views.WishlistToggleView.as_view(), name='wishlist-toggle'),
 
     # ── Cart ──────────────────────────────────────────────────────────────────
-    path('cart/', views.CartView.as_view(), name='cart'),
+    path('cart/list/', views.CartView.as_view(), name='cart'),
     path('cart/add/', views.CartItemAddView.as_view(), name='cart-add'),
     path('cart/items/<int:pk>/', views.CartItemUpdateView.as_view(), name='cart-item-update'),
     path('cart/clear/', views.CartClearView.as_view(), name='cart-clear'),

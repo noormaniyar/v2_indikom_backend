@@ -343,7 +343,10 @@ class CartView(APIView):
 
 class CartItemAddView(APIView):
     def post(self, request):
+        print(request.user, '-----request.user--------')
         cart, _ = Cart.objects.get_or_create(user=request.user)
+        print(cart, '-------cart---------')
+        print(request.data, '------request.data---------')
         serializer = CartItemSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -355,6 +358,7 @@ class CartItemAddView(APIView):
             cart=cart, product=product, variant=variant,
             defaults={'quantity': quantity}
         )
+        print(item, created, '-----------item, created---------')
         if not created:
             item.quantity += quantity
             item.save()
@@ -366,7 +370,9 @@ class CartItemUpdateView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CartItemSerializer
 
     def get_queryset(self):
+        print(self.request.user, '-----self.request.user------')
         cart, _ = Cart.objects.get_or_create(user=self.request.user)
+        print(cart, '-----cart-----')
         return CartItem.objects.filter(cart=cart)
 
     def perform_update(self, serializer):
