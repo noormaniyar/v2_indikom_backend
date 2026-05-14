@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-@receiver(post_save, sender='orders.Order')
+#@receiver(post_save, sender='orders.Order')
 def order_status_changed(sender, instance, created, **kwargs):
     from apps.tasks import create_order_notification_task, send_order_email_task
 

@@ -8,7 +8,7 @@ Usage (in views):
 from celery import shared_task
 
 
-@shared_task(name='send_otp_sms')
+# @shared_task(name='send_otp_sms')
 def send_otp_sms_task(phone: str, otp_code: str):
     """
     Send OTP via SMS. Integrate your SMS provider here.
@@ -22,7 +22,7 @@ def send_otp_sms_task(phone: str, otp_code: str):
     print(f"[SMS] Sending OTP {otp_code} to {phone}")
 
 
-@shared_task(name='send_order_confirmation_email')
+#@shared_task(name='send_order_confirmation_email')
 def send_order_email_task(order_id: int):
     from apps.orders.models import Order
     from apps.utils import send_order_confirmation_email
@@ -33,7 +33,7 @@ def send_order_email_task(order_id: int):
         pass
 
 
-@shared_task(name='send_supplier_approval_email')
+#@shared_task(name='send_supplier_approval_email')
 def send_supplier_approval_task(supplier_id: int, approved: bool, reason: str = ''):
     from apps.accounts.models import SupplierProfile
     from apps.utils import send_supplier_approval_email
@@ -44,28 +44,28 @@ def send_supplier_approval_task(supplier_id: int, approved: bool, reason: str = 
         pass
 
 
-@shared_task(name='create_order_notification')
-def create_order_notification_task(user_id: int, order_id: str, event: str):
-    from apps.accounts.models import User
-    from apps.notifications.models import Notification, create_notification
+# @shared_task(name='create_order_notification')
+# def create_order_notification_task(user_id: int, order_id: str, event: str):
+#     from apps.accounts.models import User
+#     from apps.notifications.models import Notification, create_notification
 
-    EVENT_MAP = {
-        'placed': ('Order Placed 🛍️', f'Your order {order_id} has been placed successfully.', Notification.Type.ORDER_PLACED),
-        'confirmed': ('Order Confirmed ✅', f'Order {order_id} is confirmed and being prepared.', Notification.Type.ORDER_CONFIRMED),
-        'shipped': ('Order Shipped 🚚', f'Order {order_id} is on its way!', Notification.Type.ORDER_SHIPPED),
-        'delivered': ('Order Delivered 📦', f'Order {order_id} has been delivered. Enjoy!', Notification.Type.ORDER_DELIVERED),
-        'cancelled': ('Order Cancelled ❌', f'Order {order_id} has been cancelled.', Notification.Type.ORDER_CANCELLED),
-    }
+#     EVENT_MAP = {
+#         'placed': ('Order Placed 🛍️', f'Your order {order_id} has been placed successfully.', Notification.Type.ORDER_PLACED),
+#         'confirmed': ('Order Confirmed ✅', f'Order {order_id} is confirmed and being prepared.', Notification.Type.ORDER_CONFIRMED),
+#         'shipped': ('Order Shipped 🚚', f'Order {order_id} is on its way!', Notification.Type.ORDER_SHIPPED),
+#         'delivered': ('Order Delivered 📦', f'Order {order_id} has been delivered. Enjoy!', Notification.Type.ORDER_DELIVERED),
+#         'cancelled': ('Order Cancelled ❌', f'Order {order_id} has been cancelled.', Notification.Type.ORDER_CANCELLED),
+#     }
 
-    try:
-        user = User.objects.get(id=user_id)
-        title, body, notif_type = EVENT_MAP.get(event, ('Update', f'Order {order_id} updated.', Notification.Type.GENERAL))
-        create_notification(user, title, body, notif_type, data={'order_id': order_id})
-    except User.DoesNotExist:
-        pass
+#     try:
+#         user = User.objects.get(id=user_id)
+#         title, body, notif_type = EVENT_MAP.get(event, ('Update', f'Order {order_id} updated.', Notification.Type.GENERAL))
+#         create_notification(user, title, body, notif_type, data={'order_id': order_id})
+#     except User.DoesNotExist:
+#         pass
 
 
-@shared_task(name='update_product_rating')
+#@shared_task(name='update_product_rating')
 def update_product_rating_task(product_id: int):
     """Recalculate product average rating from all reviews."""
     from apps.products.models import Product, ProductReview
@@ -80,7 +80,7 @@ def update_product_rating_task(product_id: int):
         pass
 
 
-@shared_task(name='expire_unpaid_orders')
+#@shared_task(name='expire_unpaid_orders')
 def expire_unpaid_orders_task():
     """Cancel orders that haven't been paid after 30 minutes (for online payment)."""
     from apps.orders.models import Order
