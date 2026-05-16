@@ -91,7 +91,7 @@ class RequestOTPView(APIView):
             "is_new_user": created,
             "expires_at": otp.expires_at
         })
-    
+
 class VerifyOTPView(APIView):
     permission_classes = [permissions.AllowAny]
 
@@ -105,7 +105,7 @@ class VerifyOTPView(APIView):
 
         user = User.objects.filter(
             phone=phone if phone else None,
-            email=email if email else None
+            #email=email if email else None
         ).first()
 
         if not user:
