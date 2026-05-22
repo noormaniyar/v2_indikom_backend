@@ -159,7 +159,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'sub_category', 'sub_category_name', 'supplier_name', 'supplier', 
             'description', 'weight', 'dimensions', 'tags', 'is_best_selling',
             'price', 'discount_price', 'effective_price', 'discount_percentage',
-            'thumbnail', 'rating', 'review_count', 'stock', 'is_featured',
+            'thumbnail', 'file', 'ar_file', 'rating', 'review_count', 'stock', 'is_featured',
             'is_daily_use_item', 'is_top_deal',
             'has_ar', 'is_active', 'created_at',
         ]

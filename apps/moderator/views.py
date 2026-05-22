@@ -70,6 +70,13 @@ class DashboardView(APIView):
 
 # ─── SUPPLIER MODERATION ──────────────────────────────────────────────────────
 
+class SupplierListView(generics.ListAPIView):
+    serializer_class = SupplierProfileSerializer
+    permission_classes = [permissions.IsAuthenticated, IsModerator]
+
+    def get_queryset(self):
+        return SupplierProfile.objects.all()
+
 class PendingSupplierListView(generics.ListAPIView):
     serializer_class = SupplierProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsModerator]
@@ -104,6 +111,14 @@ class ModerateSupplierView(APIView):
 
 
 # ─── PRODUCT MODERATION ───────────────────────────────────────────────────────
+
+class ProductListView(generics.ListAPIView):
+    serializer_class = ProductDetailSerializer
+    permission_classes = [permissions.IsAuthenticated, IsModerator]
+
+    def get_queryset(self):
+        return Product.objects.all()
+
 
 class PendingProductListView(generics.ListAPIView):
     serializer_class = ProductDetailSerializer
@@ -168,24 +183,3 @@ class UserToggleActiveView(APIView):
         user.save()
         return Response({'is_active': user.is_active})
 
-
-# ─── URLS ─────────────────────────────────────────────────────────────────────
-from django.urls import path
-
-urlpatterns = [
-    # Dashboard
-    path('dashboard/', DashboardView.as_view(), name='moderator-dashboard'),
-
-    # Supplier Moderation
-    path('suppliers/', PendingSupplierListView.as_view(), name='mod-supplier-list'),
-    path('suppliers/<int:pk>/moderate/', ModerateSupplierView.as_view(), name='mod-supplier-action'),
-
-    # Product Moderation
-    path('products/', PendingProductListView.as_view(), name='mod-product-list'),
-    path('products/<int:pk>/moderate/', ModerateProductView.as_view(), name='mod-product-action'),
-    path('products/<int:pk>/feature/', FeatureProductView.as_view(), name='mod-product-feature'),
-
-    # User Management
-    path('users/', UserListView.as_view(), name='mod-user-list'),
-    path('users/<int:pk>/toggle-active/', UserToggleActiveView.as_view(), name='mod-user-toggle'),
-]
