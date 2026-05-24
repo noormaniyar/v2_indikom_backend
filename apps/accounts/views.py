@@ -287,9 +287,6 @@ class ModeratorProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         profile, created = ModeratorProfile.objects.get_or_create(
             user=self.request.user,
-            defaults={
-                "email": self.request.user.email
-            }
         )
         return profile
 class DeliveryAgentProfileView(generics.RetrieveUpdateAPIView):

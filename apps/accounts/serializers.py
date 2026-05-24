@@ -126,7 +126,7 @@ class ModeratorProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ModeratorProfile
-        fields = ['email', 'bank_account_number', 'bank_ifsc', 'bank_name']
+        fields = ['id', 'user', 'email', 'bank_account_number', 'bank_ifsc', 'bank_name']
 
 class ModeratorProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
