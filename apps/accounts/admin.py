@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, OTP, Address, SupplierProfile, DeliveryAgentProfile
+from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, DeliveryAgentProfile
 
 
 @admin.register(User)
@@ -23,6 +23,10 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+@admin.register(ModeratorProfile)
+class ModeratorProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'status', 'created_at']
+    list_filter = ['status']
 @admin.register(SupplierProfile)
 class SupplierProfileAdmin(admin.ModelAdmin):
     list_display = ['business_name', 'user', 'status', 'commission_rate', 'rating', 'created_at']

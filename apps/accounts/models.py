@@ -169,6 +169,25 @@ class SupplierProfile(models.Model):
     def __str__(self):
         return f"{self.business_name} ({self.status})"
 
+class ModeratorProfile(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending', 'Pending'
+        APPROVED = 'approved', 'Approved'
+        REJECTED = 'rejected', 'Rejected'
+        SUSPENDED = 'suspended', 'Suspended'
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='moderator_profile')
+    email = models.EmailField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    bank_account_number = models.CharField(max_length=50, blank=True)
+    bank_ifsc = models.CharField(max_length=20, blank=True)
+    bank_name = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user} ({self.status})"
 
 class DeliveryAgentProfile(models.Model):
     class Status(models.TextChoices):

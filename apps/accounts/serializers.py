@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
-from .models import User, OTP, Address, SupplierProfile, DeliveryAgentProfile
+from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, DeliveryAgentProfile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -120,6 +120,18 @@ class SupplierProfileUpdateSerializer(serializers.ModelSerializer):
             'bank_ifsc', 'bank_name', 'logo', 'banner',
         ]
 
+
+class ModeratorProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = ModeratorProfile
+        fields = ['email', 'bank_account_number', 'bank_ifsc', 'bank_name']
+
+class ModeratorProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModeratorProfile
+        fields = ['email', 'bank_account_number', 'bank_ifsc', 'bank_name']
 
 class DeliveryAgentProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

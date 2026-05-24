@@ -23,5 +23,6 @@ urlpatterns = [
 
     # User Management
     path('users/', views.UserListView.as_view(), name='mod-user-list'),
+    path('users/<int:pk>/set-role/', views.SetRoleView.as_view(), name='set-role'),
     path('users/<int:pk>/toggle-active/', views.UserToggleActiveView.as_view(), name='mod-user-toggle'),
 ]

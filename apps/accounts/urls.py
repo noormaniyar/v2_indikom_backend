@@ -29,6 +29,7 @@ urlpatterns = [
 
     # Supplier
     path('supplier/profile/', views.SupplierProfileView.as_view(), name='supplier-profile'),
+    path('moderator/profile/', views.ModeratorProfileView.as_view(), name='moderator-profile'),
 
     # Delivery Agent
     path('delivery/profile/', views.DeliveryAgentProfileView.as_view(), name='delivery-profile'),

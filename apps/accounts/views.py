@@ -5,15 +5,16 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
 from django.contrib.auth import update_session_auth_hash
 
-from .models import User, OTP, Address, SupplierProfile, DeliveryAgentProfile
+from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, DeliveryAgentProfile
 from .serializers import (
     UserSerializer, RegisterSerializer,
     OTPRequestSerializer, OTPVerifySerializer,
     ChangePasswordSerializer, ForgotPasswordSerializer, ResetPasswordSerializer,
     AddressSerializer, SupplierProfileSerializer, SupplierProfileUpdateSerializer,
-    DeliveryAgentProfileSerializer, CustomTokenObtainPairSerializer
+    DeliveryAgentProfileSerializer, CustomTokenObtainPairSerializer, ModeratorProfileUpdateSerializer,
+    ModeratorProfileSerializer
 )
-from .permissions import IsSupplier, IsCustomer, IsDeliveryAgent
+from .permissions import IsSupplier, IsModerator, IsCustomer, IsDeliveryAgent
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -28,6 +29,11 @@ class RegisterView(generics.CreateAPIView):
             SupplierProfile.objects.create(
                 user=user,
                 business_name=user.full_name or user.email
+            )
+
+        elif user.role == User.Role.MODERATOR:
+            ModeratorProfile.objects.create(
+                user=user,
             )
 
         return Response({
@@ -136,6 +142,13 @@ class VerifyOTPView(APIView):
             SupplierProfile.objects.create(
                 user=user,
                 business_name=user.full_name or user.email
+            )
+
+        # Create moderator profile if needed
+        if user.role == User.Role.MODERATOR and not hasattr(user, 'moderator_profile'):
+            ModeratorProfile.objects.create(
+                user=user,
+                # email=user.email
             )
 
         refresh = RefreshToken.for_user(user)
@@ -263,7 +276,22 @@ class SupplierProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user.supplier_profile
 
+class ModeratorProfileView(generics.RetrieveUpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsModerator]
 
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return ModeratorProfileUpdateSerializer
+        return ModeratorProfileSerializer
+
+    def get_object(self):
+        profile, created = ModeratorProfile.objects.get_or_create(
+            user=self.request.user,
+            defaults={
+                "email": self.request.user.email
+            }
+        )
+        return profile
 class DeliveryAgentProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.IsAuthenticated, IsDeliveryAgent]
     serializer_class = DeliveryAgentProfileSerializer

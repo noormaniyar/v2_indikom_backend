@@ -8,7 +8,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from apps.accounts.permissions import IsModerator, IsAdmin
-from apps.accounts.models import SupplierProfile, User
+from apps.accounts.models import SupplierProfile, ModeratorProfile, User
 from apps.accounts.serializers import SupplierProfileSerializer, UserSerializer
 from apps.products.models import Product
 from apps.products.serializers import ProductDetailSerializer
@@ -173,6 +173,26 @@ class UserListView(generics.ListAPIView):
             qs = qs.filter(role=role)
         return qs
 
+class SetRoleView(APIView):
+    permission_classes = [permissions.IsAuthenticated, IsModerator]
+
+    def post(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        user.role = self.request.data.get('role')
+        print(user.role, '---user.role------')
+        user.save()
+        if user.role == 'supplier':
+            SupplierProfile.objects.create(
+                user=user,
+                business_name=user.full_name or user.email,
+                status = 'approved'
+            )
+        if user.role == 'moderator':
+            ModeratorProfile.objects.create(
+                user=user,
+                status = 'approved'
+            )
+        return Response({'role': user.role})
 
 class UserToggleActiveView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsAdmin]
