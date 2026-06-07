@@ -67,12 +67,3 @@ class SubscribeView(APIView):
             'message': 'Subscription activated.',
             'subscription': SupplierSubscriptionSerializer(sub).data
         })
-
-
-from django.urls import path
-
-urlpatterns = [
-    path('plans/', PlanListView.as_view(), name='subscription-plans'),
-    path('my/', SupplierSubscriptionView.as_view(), name='my-subscriptions'),
-    path('subscribe/', SubscribeView.as_view(), name='subscribe'),
-]
