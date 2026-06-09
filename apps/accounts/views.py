@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
 from django.contrib.auth import update_session_auth_hash
+from rest_framework.permissions import IsAuthenticated
 
 from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, DeliveryAgentProfile
 from .serializers import (
@@ -132,10 +133,13 @@ class VerifyOTPView(APIView):
 
         otp.is_used = True
         otp.save()
-
-        # ✅ FINAL USER CREATION POINT (verification)
+        player_id = request.data.get('onesignal_player_id')
+        print(player_id, '------player_id----------')
         user.is_verified = True
-        user.save()
+        if player_id:
+            user.onesignal_player_id = player_id
+            user.onesignal_updated_at = timezone.now()
+        user.save(update_fields=['onesignal_player_id', 'onesignal_updated_at', 'is_verified'])
 
         # Create supplier profile if needed
         if user.role == User.Role.SUPPLIER and not hasattr(user, 'supplier_profile'):
@@ -306,3 +310,16 @@ class DeliveryAgentProfileView(generics.RetrieveUpdateAPIView):
             profile.current_longitude = lng
             profile.save()
         return super().update(request, *args, **kwargs)
+
+class UpdatePlayerIdView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        player_id = request.data.get("player_id")
+
+        request.user.onesignal_player_id = player_id
+        request.user.save(update_fields=["onesignal_player_id"])
+
+        return Response({
+            "message": "Player ID updated"
+        })

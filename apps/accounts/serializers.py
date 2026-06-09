@@ -5,6 +5,10 @@ from django.contrib.auth.password_validation import validate_password
 from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, DeliveryAgentProfile
 
 
+class UpdatePlayerIdSerializer(serializers.Serializer):
+    player_id = serializers.CharField()
+
+
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.ReadOnlyField()
 
@@ -53,6 +57,7 @@ class OTPVerifySerializer(serializers.Serializer):
     phone = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
     code = serializers.CharField()
+    onesignal_player_id = serializers.CharField(required=False, allow_blank=True)
 
     def validate(self, attrs):
         if not attrs.get('phone') and not attrs.get('email'):

@@ -45,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ADMIN = 'admin', 'Admin'
 
     phone = PhoneNumberField(unique=True)
+    onesignal_player_id = models.CharField(max_length=255, blank=True, null=True, db_index=True)
     email = models.EmailField(blank=True, null=True)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
@@ -55,6 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     profile_picture = models.ImageField(upload_to='users/profiles/', blank=True, null=True)
     preferred_language = models.CharField(max_length=10, default='en')
     created_at = models.DateTimeField(auto_now_add=True)
+    onesignal_updated_at = models.DateTimeField(null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'phone'

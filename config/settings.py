@@ -229,6 +229,9 @@ CELERY_BEAT_SCHEDULE = {
 SITE_DOMAIN = "http://127.0.0.1:8000"
 
 
+ONESIGNAL_APP_ID = "536c7d47-0564-47e4-befa-75a691d86559"
+ONESIGNAL_REST_API_KEY = "os_v2_app_knwh2ryfmrd6jpx2owtjdwdflfc3wx6i3xiuyx42herc76izirtqapyyfc5fjzzi4elmkuhwrrxisplg5gxvqjltkan2q4vwyvvaapa"
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
