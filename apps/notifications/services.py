@@ -8,11 +8,11 @@ def send_push_notification(
     message
 ):
 
-    url = "https://api.onesignal.com/notifications"
+    url = "https://onesignal.com/api/v1/notifications"
 
     headers = {
         "accept": "application/json",
-        "Authorization": f"Key {settings.ONESIGNAL_REST_API_KEY}",
+        "Authorization": f"Basic {settings.ONESIGNAL_REST_API_KEY}",
         "content-type": "application/json"
     }
 
