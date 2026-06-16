@@ -5,13 +5,13 @@ from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, Deliv
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ['phone', 'email', 'full_name', 'role', 'is_verified', 'is_active', 'created_at']
+    list_display = ['phone', 'onesignal_player_id', 'email', 'full_name', 'role', 'is_verified', 'is_active', 'created_at']
     list_filter = ['role', 'is_verified', 'is_active']
     search_fields = ['email', 'first_name', 'last_name', 'phone']
     ordering = ['-created_at']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name', 'phone', 'profile_picture', 'preferred_language')}),
+        ('Personal Info', {'fields': ('first_name', 'last_name', 'phone', 'onesignal_player_id', 'profile_picture', 'preferred_language')}),
         ('Permissions', {'fields': ('role', 'is_active', 'is_staff', 'is_superuser', 'is_verified', 'groups', 'user_permissions')}),
         ('Dates', {'fields': ('last_login',)}),
     )

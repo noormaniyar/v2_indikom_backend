@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'phone', 'first_name', 'last_name',
+            'id', 'email', 'phone', 'onesignal_player_id', 'first_name', 'last_name',
             'full_name', 'role', 'is_verified', 'profile_picture',
             'preferred_language', 'created_at',
         ]

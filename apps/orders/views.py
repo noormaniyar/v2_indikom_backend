@@ -13,7 +13,9 @@ from .serializers import (
 from apps.accounts.models import Address
 from apps.accounts.permissions import IsAdmin, IsModerator, IsApprovedSupplier
 from apps.products.models import Cart, CartItem, Product
-
+from apps.notifications.models import Notification
+from apps.accounts.models import User
+from apps.notifications.services import send_push_notification
 
 class PlaceOrderView(APIView):
     """Place order from cart"""
@@ -133,6 +135,25 @@ class PlaceOrderView(APIView):
         # Clear cart
         cart.items.all().delete()
 
+        # Create In-App Notification
+        Notification.objects.create(
+            user=request.user,
+            title="Order Placed",
+            message=f"Your order #{order.order_number if hasattr(order, 'order_number') else order.id} has been placed successfully.",
+            notification_event="order_placed",
+            notification_type="in_app",
+            metadata={
+                "order_id": order.id
+            }
+        )
+
+        # Send Push Notification
+        if request.user.onesignal_player_id:
+            send_push_notification(
+                player_id=request.user.onesignal_player_id,
+                title="Order Placed",
+                message="Your order has been placed successfully."
+            )
         return Response({
             'message': 'Order placed successfully.',
             'order': OrderSerializer(order).data,

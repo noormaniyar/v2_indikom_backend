@@ -106,6 +106,8 @@ class VerifyOTPView(APIView):
         phone = request.data.get('phone')
         email = request.data.get('email')
         code = request.data.get('code')
+        player_id = request.data.get('onesignal_player_id')
+        print(player_id, '------player_id----------')
 
         if not phone and not email:
             return Response({'error': 'Phone or email required'}, status=400)
@@ -133,8 +135,6 @@ class VerifyOTPView(APIView):
 
         otp.is_used = True
         otp.save()
-        player_id = request.data.get('onesignal_player_id')
-        print(player_id, '------player_id----------')
         user.is_verified = True
         if player_id:
             user.onesignal_player_id = player_id
