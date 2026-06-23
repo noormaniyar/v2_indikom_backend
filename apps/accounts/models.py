@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have a password')
 
         return self.create_user(phone, password, **extra_fields)
-    
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Role(models.TextChoices):
