@@ -211,8 +211,8 @@ class ProductWriteSerializer(serializers.ModelSerializer):
         fields = [
             'name', 'category', 'sub_category', 'brand', 'sku', 'description',
             'price', 'discount_price', 'stock', 'weight', 'dimensions',
-            'thumbnail', 'file', 'ar_file', 'tags',
-            'meta_title', 'meta_description', 'specifications',
+            'thumbnail', 'file', 'android_ar_file', 'ios_ar_file', 'web_ar_file', 'tags',
+            'has_ar', 'meta_title', 'meta_description', 'specifications',
         ]
 
     def create(self, validated_data):

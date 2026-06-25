@@ -1,5 +1,8 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
+from django.utils.text import slugify
+import uuid
+from django.core.validators import FileExtensionValidator
 
 # ─── FILE PATHS ───────────────────────────────────────────────────────────────
 category_images_path = "category/files/"
@@ -147,7 +150,9 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     thumbnail = models.FileField(upload_to=product_images_path, blank=True, null=True)
     file = models.FileField(upload_to=product_images_path, blank=True, null=True)
-    ar_file = models.FileField(upload_to=product_ar_images_path, blank=True, null=True)
+    android_ar_file = models.FileField(upload_to=product_ar_images_path, blank=True, null=True)
+    ios_ar_file = models.FileField(upload_to=product_ar_images_path, blank=True, null=True)
+    web_ar_file = models.FileField(upload_to=product_ar_images_path, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -180,11 +185,9 @@ class Product(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.ar_file:
+        if self.android_ar_file or self.ios_ar_file or self.web_ar_file:
             self.has_ar = True
         if not self.slug:
-            from django.utils.text import slugify
-            import uuid
             base_slug = slugify(self.name)
             self.slug = f"{base_slug}-{str(uuid.uuid4())[:8]}"
         super().save(*args, **kwargs)
