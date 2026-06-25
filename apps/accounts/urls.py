@@ -9,6 +9,9 @@ urlpatterns = [
     # path('logout/', views.LogoutView.as_view(), name='logout'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
     path("player-id/", views.UpdatePlayerIdView.as_view()),
+    path('privacy-policy/', views.PrivacyPolicyView.as_view(), name='privacy_policy'),
+    path('terms-and-conditions/', views.TermsAndConditionsView.as_view(), name='terms_and_conditions'),
+
 
     # Profile
     path('me/', views.MeView.as_view(), name='me'),

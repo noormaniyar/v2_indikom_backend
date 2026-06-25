@@ -5,6 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.permissions import IsAuthenticated
+from django.views.generic import TemplateView
 
 from .models import User, OTP, Address, SupplierProfile, ModeratorProfile, DeliveryAgentProfile
 from .serializers import (
@@ -165,6 +166,13 @@ class VerifyOTPView(APIView):
             },
             "user": UserSerializer(user).data
         })
+
+class PrivacyPolicyView(TemplateView):
+    template_name = 'accounts/privacy_policy.html'
+
+
+class TermsAndConditionsView(TemplateView):
+    template_name = 'accounts/terms_and_conditions.html'
 
 
 class ChangePasswordView(APIView):

@@ -9,6 +9,11 @@ from django.conf import settings
 
 from django.contrib.auth.models import BaseUserManager
 
+
+class IsActive(models.TextChoices):
+    YES = 'yes', 'Yes'
+    NO = 'no', 'No'
+
 class UserManager(BaseUserManager):
 
     def create_user(self, phone, password=None, **extra_fields):
@@ -50,7 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.CUSTOMER)
-    is_active = models.BooleanField(default=True)
+    is_active = models.CharField(max_length=20, choices=IsActive.choices, default=IsActive.YES)
     is_staff = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     profile_picture = models.ImageField(upload_to='users/profiles/', blank=True, null=True)
