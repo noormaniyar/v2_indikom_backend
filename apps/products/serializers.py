@@ -159,7 +159,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'sub_category', 'sub_category_name', 'supplier_name', 'supplier', 
             'description', 'weight', 'dimensions', 'tags', 'is_best_selling',
             'price', 'discount_price', 'effective_price', 'discount_percentage',
-            'thumbnail', 'file', 'ar_file', 'rating', 'review_count', 'stock', 'is_featured',
+            'thumbnail', 'file', 'android_ar_file', 'ios_ar_file', 'web_ar_file', 'rating', 'review_count', 'stock', 'is_featured',
             'is_daily_use_item', 'is_top_deal',
             'has_ar', 'is_active', 'created_at',
         ]
@@ -189,7 +189,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'price', 'discount_price', 'effective_price', 'discount_percentage',
             'stock', 'weight', 'dimensions', 'is_active', 'is_featured', 'is_daily_use_item', 'is_top_deal',
             'moderation_status', 'rating', 'review_count',
-            'thumbnail', 'file', 'ar_file', 'has_ar', 'tags',
+            'thumbnail', 'file', 'android_ar_file', 'ios_ar_file', 'web_ar_file', 'has_ar', 'tags',
             'meta_title', 'meta_description',
             'images', 'variants', 'specifications',
             'is_wishlisted', 'created_at', 'updated_at',
