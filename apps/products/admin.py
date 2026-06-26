@@ -2,7 +2,7 @@ from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from .models import (
     Category, SubCategory, SpecificationTemplate, AttributeDefinition, AttributeValue,
-    Product, ProductImage, ProductVariant, VariantAttribute, ProductSpecification,
+    Product, ProductName, ProductImage, ProductVariant, VariantAttribute, ProductSpecification,
     Wishlist, ProductReview, ReviewImage, Cart, CartItem
 )
 
@@ -102,3 +102,7 @@ class CartAdmin(admin.ModelAdmin):
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
     list_display = ['product', 'quantity', 'added_at']
+
+
+admin.site.register(ProductName)
+

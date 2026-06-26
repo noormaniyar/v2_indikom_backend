@@ -10,7 +10,7 @@ from django.db import models
 
 from .models import (
     Category, SubCategory, AttributeDefinition, SpecificationTemplate,
-    Product, ProductImage, ProductVariant, ProductSpecification,
+    Product, ProductName, ProductImage, ProductVariant, ProductSpecification,
     Wishlist, ProductReview, ReviewImage, Cart, CartItem
 )
 from .serializers import (
@@ -18,7 +18,7 @@ from .serializers import (
     AttributeDefinitionSerializer, SpecificationTemplateSerializer,
     ProductListSerializer, ProductDetailSerializer, ProductWriteSerializer,
     ProductImageSerializer, ProductVariantSerializer, ProductVariantWriteSerializer,
-    ProductSpecificationSerializer, WishlistSerializer,
+    ProductSpecificationSerializer, WishlistSerializer,ProductNameListSerializer,
     ProductReviewSerializer, CartSerializer, CartItemSerializer
 )
 from .filters import ProductFilter
@@ -128,6 +128,19 @@ class SpecificationTemplateView(generics.ListCreateAPIView):
 
 
 # ─── PRODUCT VIEWS ────────────────────────────────────────────────────────────
+class ProductNameListCreateView(generics.ListCreateAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return ProductNameListSerializer
+        return ProductNameListSerializer
+
+    def get_queryset(self):
+        return ProductName.objects.all()
+    
+    def perform_create(self, serializer):
+        serializer.save()
 
 class ProductListView(generics.ListAPIView):
     """Public product listing with full filtering, search, sort"""

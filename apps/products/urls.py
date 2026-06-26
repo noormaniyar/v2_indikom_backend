@@ -14,6 +14,8 @@ urlpatterns = [
     path('spec-templates/', views.SpecificationTemplateView.as_view(), name='spec-template-list'),
 
     # ── Products (public) ─────────────────────────────────────────────────────
+    path('product-name-list/', views.ProductNameListCreateView.as_view(), name='product-name-list'),
+
     path('', views.ProductListView.as_view(), name='product-list'),
     path('featured/', views.FeaturedProductsView.as_view(), name='featured-products'),
     path('<slug:slug>/', views.ProductDetailView.as_view(), name='product-detail'),

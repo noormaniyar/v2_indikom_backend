@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import (
     Category, SubCategory, SpecificationTemplate, AttributeDefinition, AttributeValue,
-    Product, ProductImage, ProductVariant, VariantAttribute, ProductSpecification,
+    Product, ProductName, ProductImage, ProductVariant, VariantAttribute, ProductSpecification,
     Wishlist, ProductReview, ReviewImage, Cart, CartItem
 )
 
@@ -143,6 +143,11 @@ class ProductSpecificationSerializer(serializers.ModelSerializer):
 
 
 # ─── PRODUCT ─────────────────────────────────────────────────────────────────
+class ProductNameListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductName
+        fields = "__all__"
 
 class ProductListSerializer(serializers.ModelSerializer):
     """Lightweight serializer for list views / search results"""

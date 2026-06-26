@@ -116,6 +116,23 @@ class AttributeValue(models.Model):
 
 
 # ─── PRODUCT ──────────────────────────────────────────────────────────────────
+
+class ProductName(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=300, unique=True, blank=True)
+
+
+    def __str__(self):
+        return self.name
+    
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            self.slug = f"{base_slug}-{str(uuid.uuid4())[:8]}"
+        super().save(*args, **kwargs)
+    
+
 class Product(models.Model):
     """
     Your existing Product model fields preserved exactly.
