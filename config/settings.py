@@ -230,7 +230,7 @@ CELERY_BEAT_SCHEDULE = {
 DATA_UPLOAD_MAX_MEMORY_SIZE = 209715200      # 200 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 209715200      # 200 MB
 
-SITE_DOMAIN = "https://api.indikum.com"
+SITE_DOMAIN = "https://www.api.indikum.com"
 #SITE_DOMAIN = "http://16.171.113.84"
 
 
